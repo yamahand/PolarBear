@@ -1,0 +1,3 @@
+[submodule "PolarBear/external/fmt"]
+	path = PolarBear/external/fmt
+	url = https://github.com/fmtlib/fmt.git

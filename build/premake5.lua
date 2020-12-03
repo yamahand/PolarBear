@@ -34,7 +34,7 @@ project "PolarBear"
    filter {}
 
 project "App"
-   kind "ConsoleApp"
+   kind "WindowedApp"
 
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"
