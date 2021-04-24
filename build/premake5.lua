@@ -16,7 +16,14 @@ project "PolarBear"
    includedirs { "../PolarBear/include" }
 
    vpaths { ["*"] = "../PolarBear/" }
-   files { "../PolarBear/include/**.h", "../PolarBear/include/**.hpp", "../PolarBear/include/**.inl", "../PolarBear/src/**.c", "../PolarBear/src/**.cpp", "../PolarBear/src/**.inl" }
+   files {
+      "../PolarBear/include/**.h",
+      "../PolarBear/include/**.hpp",
+      "../PolarBear/include/**.inl",
+      "../PolarBear/src/**.c",
+      "../PolarBear/src/**.cpp", 
+      "../PolarBear/src/**.inl",
+   }
 
    filter "configurations:Debug"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
@@ -34,7 +41,7 @@ project "PolarBear"
    filter {}
 
 project "App"
-   kind "ConsoleApp"
+   kind "WindowedApp"
 
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"

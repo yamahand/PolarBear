@@ -2,7 +2,7 @@
 #include <PolarBear.hpp>
 
 
-int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     pb::output("Hello world.");
     return 0;
 }
