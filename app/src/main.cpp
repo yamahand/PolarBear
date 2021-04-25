@@ -3,6 +3,7 @@
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-    pb::output("Hello world.");
+    pb::output("Hello world.\n");
+
     return 0;
 }

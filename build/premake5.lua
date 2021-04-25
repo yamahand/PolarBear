@@ -13,16 +13,51 @@ project "PolarBear"
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"
    cppdialect "C++latest"
-   includedirs { "../PolarBear/include" }
+   includedirs { 
+      "../PolarBear/source",
+      "../PolarBear/dependencies/imgui",
+      "../PolarBear/dependencies/fmt/include",
+      "../PolarBear/dependencies/strconv",
+    }
 
-   vpaths { ["*"] = "../PolarBear/" }
+   vpaths { 
+      ["dependencies/imgui"] = "../PolarBear/dependencies/imgui/",
+      ["dependencies/fmt"] = "../PolarBear/dependencies/fmt/**.*",
+      ["dependencies/strconv"] = "../PolarBear/dependencies/strconv/",
+      ["*"] = "../PolarBear/"
+    }
    files {
-      "../PolarBear/include/**.h",
-      "../PolarBear/include/**.hpp",
-      "../PolarBear/include/**.inl",
-      "../PolarBear/src/**.c",
-      "../PolarBear/src/**.cpp", 
-      "../PolarBear/src/**.inl",
+      "../PolarBear/source/**.h",
+      "../PolarBear/source/**.hpp",
+      "../PolarBear/source/**.inl",
+      "../PolarBear/source/**.c",
+      "../PolarBear/source/**.cpp", 
+      "../PolarBear/source/**.inl",
+   }
+   files {
+      "../PolarBear/dependencies/imgui/imconfig.h",
+      "../PolarBear/dependencies/imgui/imgui_demo.cpp",
+      "../PolarBear/dependencies/imgui/imgui_draw.cpp",
+      "../PolarBear/dependencies/imgui/imgui_internal.h",
+      "../PolarBear/dependencies/imgui/imgui_tables.cpp",
+      "../PolarBear/dependencies/imgui/imgui_widgets.cpp",
+      "../PolarBear/dependencies/imgui/imgui.cpp",
+      "../PolarBear/dependencies/imgui/imgui.h",
+
+      "../PolarBear/dependencies/imgui/backends/imgui_impl_win32.h",
+      "../PolarBear/dependencies/imgui/backends/imgui_impl_win32.cpp",
+      "../PolarBear/dependencies/imgui/backends/imgui_impl_dx12.h",
+      "../PolarBear/dependencies/imgui/backends/imgui_impl_dx12.cpp",
+   }
+   files {
+      "../PolarBear/dependencies/fmt/include/fmt/core.h" ,
+      "../PolarBear/dependencies/fmt/include/fmt/format.h" ,
+      "../PolarBear/dependencies/fmt/include/fmt/format-inl.h", 
+      "../PolarBear/dependencies/fmt/src/format.cc",
+      "../PolarBear/dependencies/fmt/src/os.cc",
+   }
+   files {
+      "../PolarBear/dependencies/strconv/strconv.h",
    }
 
    filter "configurations:Debug"
@@ -46,7 +81,7 @@ project "App"
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"
    cppdialect "C++latest"
-   includedirs { "../PolarBear/include" }
+   includedirs { "../PolarBear/source" }
    libdirs { "../.bin/%{cfg.buildcfg}" }
    links { "PolarBear" }
 

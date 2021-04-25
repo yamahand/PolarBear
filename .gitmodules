@@ -1,0 +1,9 @@
+[submodule "PolarBear/dependencies/fmt"]
+	path = PolarBear/dependencies/fmt
+	url = https://github.com/fmtlib/fmt
+[submodule "PolarBear/dependencies/imgui"]
+	path = PolarBear/dependencies/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "PolarBear/dependencies/strconv"]
+	path = PolarBear/dependencies/strconv
+	url = https://github.com/javacommons/strconv.git
