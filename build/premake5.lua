@@ -8,32 +8,20 @@ workspace "PolarBear"
    system "Windows"
    architecture "x86_64"
 
-project "PolarBear"
+project "Dependencies"
    kind "StaticLib"
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"
    cppdialect "C++latest"
-   includedirs { 
-      "../PolarBear/source",
+   includedirs {
       "../PolarBear/dependencies/imgui",
       "../PolarBear/dependencies/fmt/include",
-      "../PolarBear/dependencies/strconv",
-    }
-
-   vpaths { 
-      ["dependencies/imgui"] = "../PolarBear/dependencies/imgui/",
-      ["dependencies/fmt"] = "../PolarBear/dependencies/fmt/**.*",
-      ["dependencies/strconv"] = "../PolarBear/dependencies/strconv/",
-      ["*"] = "../PolarBear/"
-    }
-   files {
-      "../PolarBear/source/**.h",
-      "../PolarBear/source/**.hpp",
-      "../PolarBear/source/**.inl",
-      "../PolarBear/source/**.c",
-      "../PolarBear/source/**.cpp", 
-      "../PolarBear/source/**.inl",
    }
+   vpaths { 
+      ["imgui"] = "../PolarBear/dependencies/imgui/",
+      ["fmt"] = "../PolarBear/dependencies/fmt/**.*",
+      ["strconv"] = "../PolarBear/dependencies/strconv/",
+    }
    files {
       "../PolarBear/dependencies/imgui/imconfig.h",
       "../PolarBear/dependencies/imgui/imgui_demo.cpp",
@@ -59,21 +47,78 @@ project "PolarBear"
    files {
       "../PolarBear/dependencies/strconv/strconv.h",
    }
+   filter "configurations:Debug"
+      defines { "DEBUG" }
+      symbols "On"
+      runtime "Debug"
+
+   filter "configurations:Development"
+      defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+      symbols "On"
+      optimize "On"
+      runtime "Debug"
+
+   filter "configurations:Profile"
+      defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+      symbols "On"
+      optimize "On"
+      runtime "Release"
+   
+   filter "configurations:Release"
+      defines { "NDEBUG" }
+      optimize "On"
+
+project "PolarBear"
+   kind "StaticLib"
+   language "C++"
+   targetdir "../.bin/%{cfg.buildcfg}"
+   cppdialect "C++latest"
+   includedirs { 
+      "../PolarBear/source",
+      "../PolarBear/dependencies/imgui",
+      "../PolarBear/dependencies/fmt/include",
+      "../PolarBear/dependencies/strconv",
+    }
+   libdirs { "../.bin/%{cfg.buildcfg}" }
+   links { "Dependencies" }
+
+   vpaths {
+      ["*"] = "../PolarBear/"
+    }
+   files {
+      "../PolarBear/source/**.h",
+      "../PolarBear/source/**.hpp",
+      "../PolarBear/source/**.inl",
+      "../PolarBear/source/**.c",
+      "../PolarBear/source/**.cpp", 
+      "../PolarBear/source/**.inl",
+   }
 
    filter "configurations:Debug"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
       symbols "On"
+      runtime "Debug"
 
-   filter "configurations:Development or Profile"
+   filter "configurations:Development"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
       symbols "On"
       optimize "On"
+      runtime "Debug"
+
+   filter "configurations:Profile"
+      defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+      symbols "On"
+      optimize "On"
+      runtime "Release"
    
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"
 
    filter {}
+
+   pchheader( "Precompile.h" )
+	pchsource( "../PolarBear/source/Precompile.cpp" )
 
 project "App"
    kind "WindowedApp"
@@ -96,18 +141,22 @@ project "App"
    filter "configurations:Debug"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
       symbols "On"
+      runtime "Debug"
 
    filter "configurations:Development"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
       symbols "On"
+      runtime "Debug"
    
    filter "configurations:Profile"
       defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
       symbols "On"
       optimize "On"
+      runtime "Release"
    
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"
+      runtime "Release"
 
    filter {}

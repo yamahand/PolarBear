@@ -1,3 +1,4 @@
+#include <Precompile.h>
 #include <PolarBear.hpp>
 #include <iostream>
 #include <Windows.h>
@@ -29,4 +30,5 @@ namespace pb {
         auto fm = fmt::format("{}", str);
         OutputDebugStringA(fm.c_str());*/
     }
+
 }
