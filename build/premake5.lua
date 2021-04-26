@@ -81,7 +81,12 @@ project "App"
    language "C++"
    targetdir "../.bin/%{cfg.buildcfg}"
    cppdialect "C++latest"
-   includedirs { "../PolarBear/source" }
+   includedirs { 
+      "../PolarBear/source",
+      "../PolarBear/dependencies/imgui",
+      "../PolarBear/dependencies/fmt/include",
+      "../PolarBear/dependencies/strconv",
+    }
    libdirs { "../.bin/%{cfg.buildcfg}" }
    links { "PolarBear" }
 
