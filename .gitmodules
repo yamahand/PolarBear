@@ -10,3 +10,6 @@
 [submodule "dependencies/strconv"]
 	path = dependencies/strconv
 	url = https://github.com/javacommons/strconv.git
+[submodule "dependencies/tomlplusplus"]
+	path = dependencies/tomlplusplus
+	url = https://github.com/marzer/tomlplusplus.git
