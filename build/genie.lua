@@ -33,6 +33,22 @@ function dependenciesIncDir()
     }
 end
 
+function setLibDir()
+    configuration {"Debug"}
+        libdirs(BINARY_DIR .. "Debug")
+
+    configuration {"Development"}
+        libdirs(BINARY_DIR .. "Development")
+
+    configuration {"Profile"}
+        libdirs(BINARY_DIR .. "Profile")
+
+    configuration {"Release"}
+        libdirs(BINARY_DIR .. "Release")
+
+    configuration {}
+end
+
 solution "PolarBear"
     location(LOCATION)
     language "C++"
@@ -44,9 +60,9 @@ solution "PolarBear"
         "UseObjectResponseFile",
         "UseLDResponseFile",
         "LinkSupportCircularDependencies",
-        "FatalWarnings", 
-        "NoExceptions", 
-        "NoRTTI", 
+        "FatalWarnings",
+        "NoExceptions",
+        "NoRTTI",
         "NoEditAndContinue",
         "Unicode",
     }
@@ -56,13 +72,13 @@ solution "PolarBear"
         buildoptions { "/wd4503", "/wd4819"}
 
     configuration "not windows"
-        removefiles { "../PolarBear/source/**/windows/*"}
+        removefiles { "../PolarBear/**/windows/*", "../PolarBear/**/Windows/*"}
 
     configuration {}
 
 project "Dependencies"
     kind "StaticLib"
-    
+
     defaultTargetDir()
 
     configuration {}
@@ -96,7 +112,7 @@ project "Dependencies"
         "../dependencies/imgui/imgui_widgets.cpp",
         "../dependencies/imgui/imgui.cpp",
         "../dependencies/imgui/imgui.h",
-  
+
         "../dependencies/imgui/backends/imgui_impl_win32.h",
         "../dependencies/imgui/backends/imgui_impl_win32.cpp",
         "../dependencies/imgui/backends/imgui_impl_dx12.h",
@@ -105,7 +121,7 @@ project "Dependencies"
     files {
         "../dependencies/fmt/include/fmt/core.h" ,
         "../dependencies/fmt/include/fmt/format.h" ,
-        "../dependencies/fmt/include/fmt/format-inl.h", 
+        "../dependencies/fmt/include/fmt/format-inl.h",
         "../dependencies/fmt/src/format.cc",
         "../dependencies/fmt/src/os.cc",
     }
@@ -120,18 +136,19 @@ project "PolarBear"
     kind "StaticLib"
 
     files {
-        "../PolarBear/source/**.h",
-        "../PolarBear/source/**.hpp",
-        "../PolarBear/source/**.inl",
-        "../PolarBear/source/**.c",
-        "../PolarBear/source/**.cpp", 
-        "../PolarBear/source/**.inl",
+        "../PolarBear/**.h",
+        "../PolarBear/**.hpp",
+        "../PolarBear/**.inl",
+        "../PolarBear/**.c",
+        "../PolarBear/**.cpp",
+        "../PolarBear/**.inl",
     }
 
     dependenciesIncDir()
     includedirs {
-        "../PolarBear/source"
+        "../PolarBear"
     }
+    setLibDir()
 
     links { "Dependencies" }
 
@@ -156,7 +173,7 @@ project "PolarBear"
     configuration{}
 
     pchheader( "Precompile.h" )
-    pchsource( "../PolarBear/source/Precompile.cpp" )
+    pchsource( "../PolarBear/Precompile.cpp" )
 
 project "app"
     kind "WindowedApp"
@@ -164,10 +181,14 @@ project "app"
     defaultTargetDir()
     dependenciesIncDir()
     includedirs {
-        "../PolarBear/source"
+        "../PolarBear"
     }
 
-    links { "PolarBear", "Dependencies" }
+    setLibDir()
+    links {
+        "PolarBear",
+        "Dependencies"
+    }
 
     configuration {"Debug or Development"}
         defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }

@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 
 namespace pb {
+
     void output(std::string_view str);
     void output(std::wstring_view str);
 
