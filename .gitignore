@@ -26,13 +26,9 @@
 *.a
 *.lib
 
-# Executables
-*.exe
-*.out
-*.app
-
 # Directories
 .vs
 .vscode
 .build
+.build*
 .bin
