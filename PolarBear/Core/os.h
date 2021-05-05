@@ -2,12 +2,33 @@
 
 namespace pb {
 
+    struct Point { int32_t x; int32_t y; };
+    struct RectDesc { int32_t left, top, right, bottom; };
 
-    struct Point { int x, y; };
-    struct Rect { int left, top, width, height; };
+    inline int GetRectWidth(const RectDesc& rect) { return rect.right - rect.left; }
+    inline int GetRectHeight(const RectDesc& rect) { return rect.bottom - rect.top; }
 
     using WindowHandle = void*;
     constexpr WindowHandle INVALID_WINDOW = nullptr;
+
+    struct WindowDesc {
+        WindowHandle handle;
+        RectDesc windowedRect;
+        RectDesc fullScreenRect;
+        RectDesc clientRect;
+        uint32_t windowsFlags;
+        bool fullScreen;
+        bool cursorTracked;
+        bool iconified;
+        bool maximized;
+        bool minimized;
+        bool hide;
+        bool noresizeFrame;
+        bool borderlessWindow;
+        bool overrideDefaultPosition;
+        bool centerd;
+        bool forceLowDPI;
+    };
 
     struct Event {
         enum class Type {
@@ -45,4 +66,5 @@ namespace pb {
     };
 
     WindowHandle InitWindow(const InitWindowDesc& desc);
+    bool GetEvent(Event& e);
 }

@@ -1,12 +1,10 @@
 #pragma once
 
-namespace pb
-{
+namespace pb {
     template <class Derrived>
-    class NonCopyable
-    {
+    class NonCopyable {
         NonCopyable() = default;
-        NonCopyable(const NonCopyable &) = delete;
-        NonCopyable &operator=(const NonCopyable) = delete;
-    }
+        NonCopyable(const NonCopyable&) = delete;
+        NonCopyable& operator=(const NonCopyable) = delete;
+    };
 }

@@ -8,6 +8,7 @@ namespace pb {
         ~Engine() {}
 
         void Init();
+        void Run();
         void Term();
     };
 

@@ -12,9 +12,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     pb::Engine engine;
     engine.Init();
 
-    while (1) {
-        Sleep(100);
-    }
+    engine.Run();
 
+    engine.Term();
     return 0;
 }

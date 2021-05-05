@@ -5,7 +5,9 @@
 using namespace pb;
 
 void pb::Engine::Init() {
-    InitWindow(InitWindowDesc{});
+}
+
+void pb::Engine::Run() {
 }
 
 void pb::Engine::Term() {

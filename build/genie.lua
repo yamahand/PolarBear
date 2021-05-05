@@ -49,6 +49,13 @@ function setLibDir()
     configuration {}
 end
 
+function setPlatforms()
+    configuration {"x64"}
+        defines { "PB_WINDOWS" }
+
+    configuration {}
+end
+
 solution "PolarBear"
     location(LOCATION)
     language "C++"
@@ -75,6 +82,8 @@ solution "PolarBear"
         removefiles { "../PolarBear/**/windows/*", "../PolarBear/**/Windows/*"}
 
     configuration {}
+
+    setPlatforms()
 
 project "Dependencies"
     kind "StaticLib"
