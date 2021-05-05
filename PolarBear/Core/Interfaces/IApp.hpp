@@ -37,7 +37,14 @@ namespace pb {
     };
 
 #if defined (PB_WINDOWS)
-    int IApp::argc;
-    const char** IApp::argv;
+    extern int WindowsMain(int argc, const char** argv, IApp* app);
+#define DEFINE_APPLiCATION_MAIN(appClass)                   \
+    int pb::IApp::argc;                                     \
+    const char** pb::IApp::argv;                            \
+                                                            \
+    int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd) {  \
+        appClass app;                                       \
+        return pb::WindowsMain(0, nullptr, &app);               \
+    }
 #endif
 }

@@ -1,5 +1,5 @@
 #include <Precompile.h>
-#include "../IApp.hpp"
+#include "../Interfaces/IApp.hpp"
 
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -323,6 +323,10 @@ namespace pb {
         }
     }
 
+    void RequestShutdown() {
+        PostQuitMessage(0);
+    }
+
     void OpenWindow(const char* appName, WindowDesc* winDesc) {
         UpdateWIndowDescfullScreenRect(winDesc);
 
@@ -332,7 +336,7 @@ namespace pb {
         RECT rect = {
             (LONG)winDesc->clientRect.left,
             (LONG)winDesc->clientRect.top,
-            (LONG)(winDesc->clientRect.right + winDesc->clientRect.right),
+            (LONG)(winDesc->clientRect.left + winDesc->clientRect.right),
             (LONG)(winDesc->clientRect.top + winDesc->clientRect.bottom),
         };
 
@@ -457,7 +461,7 @@ namespace pb {
         return 0;
     }
 
-    int windowsMain(int argc, int argv, IApp* app) {
+    int WindowsMain(int argc, const char** argv, IApp* app) {
 
         WindowDesc window = {};
 
@@ -520,7 +524,7 @@ namespace pb {
 
         gApp->pCommandLine = GetCommandLineA();
         {
-            if (gApp->Init()) {
+            if (!gApp->Init()) {
                 return EXIT_FAILURE;
             }
 
@@ -529,7 +533,7 @@ namespace pb {
 
         auto lastCounter = GetUSec();
         bool quit = false;
-        while (quit) {
+        while (!quit) {
             auto counter = GetUSec();
             float deltaTime = CounterToSecondsElapsed(lastCounter, counter);
             lastCounter = counter;
