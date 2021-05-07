@@ -8,6 +8,17 @@ end
 local ROOT_DIR = path.getabsolute("../")
 local BINARY_DIR = LOCATION .. "/bin/"
 
+newoption {
+    trigger     = "gfxapi",
+    value       = "API",
+    description = "Choose a particular 3D API for rendering",
+    allowed     = {
+        { "dx12", "Direct3D12 (Windows only)"},
+        { "dx11", "Direct3D11 (Windows only)"},
+        { "opengl",   "OpenGL" },
+    }
+}
+
 function defaultTargetDir()
     configuration {"Debug"}
         targetdir(BINARY_DIR .. "Debug")
