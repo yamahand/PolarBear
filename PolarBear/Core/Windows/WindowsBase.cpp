@@ -3,20 +3,13 @@
 
 #include <sys/stat.h>
 #include <stdlib.h>
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN 1
-#endif
-#include <windows.h>
-#undef min
-#undef max
-#include <windowsx.h>
-
-#include <strconv.h>
-
 #include <algorithm>
 #include <chrono>
 
+#include <strconv.h>
+
 #include "../Interfaces/ITime.h"
+#include "../Interfaces/IAssert.h"
 
 namespace pb {
     namespace {
@@ -463,6 +456,7 @@ namespace pb {
 
     int WindowsMain(int argc, const char** argv, IApp* app) {
 
+        PB_ASSERT(false);
         WindowDesc window = {};
 
         static WNDCLASS wc = [&]() -> WNDCLASS {

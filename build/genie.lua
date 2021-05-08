@@ -19,6 +19,15 @@ newoption {
     }
 }
 
+local GFXAPI = ""
+if(_OPTIONS["gfxapi"] == "opengl") then
+    GFXAPI = "PB_OPENGL"
+elseif (_OPTIONS["gfxapi"] == "dx12") then
+    GFXAPI = "PB_DX12"
+elseif (_OPTIONS["gfxapi"] == "dx11") then
+    GFXAPI = "PB_DX11"
+end
+
 function defaultTargetDir()
     configuration {"Debug"}
         targetdir(BINARY_DIR .. "Debug")
@@ -203,19 +212,19 @@ project "PolarBear"
     defaultTargetDir()
 
     configuration {"Debug"}
-        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE", GFXAPI }
         flags { "FullSymbols", "Symbols", "DebugRuntime" }
 
     configuration {"Development"}
-        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE", GFXAPI }
         flags { "Symbols", "Optimize", "DebugRuntime" }
 
     configuration {"Profile"}
-        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE" }
+        defines { "DEBUG", "PB_DEBUG", "PB_PROFILE", GFXAPI }
         flags { "Symbols", "Optimize" }
 
     configuration {"Release"}
-        defines { "NDEBUG" }
+        defines { "NDEBUG", GFXAPI }
         flags { "OptimizeSpeed", "No64BitChecks" }
 
     configuration{}

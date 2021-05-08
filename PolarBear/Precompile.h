@@ -2,4 +2,11 @@
 
 #include <cstdint>
 #include <cstdlib>
-//#include <cstdalign>
+
+#if defined(PB_WINDOWS)
+
+#define NOMINMAX
+#include <Windows.h>
+#include <windowsx.h>
+
+#endif

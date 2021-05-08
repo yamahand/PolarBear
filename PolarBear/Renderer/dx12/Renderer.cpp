@@ -24,8 +24,23 @@ namespace pb {
     ID3D12GraphicsCommandList* cmdList = nullptr;
     ID3D12CommandQueue* cmdQueue = nullptr;
 
+    void EnableDebugLayer() {
+        ID3D12Debug* debugLayer = nullptr;
+        if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugLayer)))) {
+            debugLayer->EnableDebugLayer();
+            debugLayer->Release();
+        }
+    }
+
     void InitRenderer() {
 
+#ifdef PB_DEBUG
+        EnableDebugLayer();
+        auto result = CreateDXGIFactory2(DXGI_CREATE_FACTORY_DEBUG, IID_PPV_ARGS(&dxgiFactory));
+#else
+        auto result = CreateDXGIFactory1(IID_PPV_ARGS(&dxgiFactory));
+#endif
+        assert(SUCCEEDED(result));
     }
 
 }
