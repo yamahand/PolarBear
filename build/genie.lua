@@ -41,6 +41,7 @@ function dependenciesIncDir()
         "../dependencies/fmt/include",
         "../dependencies/strconv",
         "../dependencies/stb",
+        "../dependencies/D3D12MemoryAllocator",
     }
 end
 
@@ -132,11 +133,6 @@ project "Dependencies"
         "../dependencies/imgui/imgui_widgets.cpp",
         "../dependencies/imgui/imgui.cpp",
         "../dependencies/imgui/imgui.h",
-
-        "../dependencies/imgui/backends/imgui_impl_win32.h",
-        "../dependencies/imgui/backends/imgui_impl_win32.cpp",
-        "../dependencies/imgui/backends/imgui_impl_dx12.h",
-        "../dependencies/imgui/backends/imgui_impl_dx12.cpp",
      }
     files {
         "../dependencies/fmt/include/fmt/core.h" ,
@@ -151,6 +147,30 @@ project "Dependencies"
     files {
         "../dependencies/stb/strconv.h",
     }
+
+    configuration "windows"
+    files {
+        "../dependencies/imgui/backends/imgui_impl_win32.h",
+        "../dependencies/imgui/backends/imgui_impl_win32.cpp",
+    }
+    configuration {}
+
+    if(_OPTIONS["gfxapi"] == "opengl") then
+        print ( "PB_OPENGL" )
+    elseif (_OPTIONS["gfxapi"] == "dx12") then
+        files {
+            "../dependencies/imgui/backends/imgui_impl_dx12.h",
+            "../dependencies/imgui/backends/imgui_impl_dx12.cpp",
+
+            "../dependencies/D3D12MemoryAllocator/D3D12MemAlloc.h",
+            "../dependencies/D3D12MemoryAllocator/D3D12MemAlloc.cpp",
+        }
+    elseif (_OPTIONS["gfxapi"] == "dx11") then
+        files {
+            "../dependencies/imgui/backends/imgui_impl_dx11.h",
+            "../dependencies/imgui/backends/imgui_impl_dx11.cpp",
+        }
+    end
 
 project "PolarBear"
     kind "StaticLib"
@@ -171,6 +191,14 @@ project "PolarBear"
     setLibDir()
 
     links { "Dependencies" }
+
+    if (_OPTIONS["gfxapi"] == "dx12") then
+        links {
+            "d3d12.lib",
+            "dxgi.lib",
+            "d3dcompiler.lib",
+        }
+    end
 
     defaultTargetDir()
 
