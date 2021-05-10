@@ -456,8 +456,8 @@ namespace pb {
 
     int WindowsMain(int argc, const char** argv, IApp* app) {
 
-        PB_ASSERT(false);
-        PB_ASSERT_MSG(false, "%d", argc);
+        //PB_ASSERT(false);
+        PB_ASSERT_MSG(false, "%d, {0}", argc, argc);
         WindowDesc window = {};
 
         static WNDCLASS wc = [&]() -> WNDCLASS {

@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "../NonCopyable.h"
 
+#include <fmt/format.h>
+
 namespace pb {
 
     enum class LogLevel : uint32_t {
@@ -24,5 +26,12 @@ namespace pb {
 
         static void Log(LogLevel level, const char* condition, const char* fileName, int lineNumber);
         static void Log(LogLevel level, const char* condition, const char* fileName, int lineNumber, const char* message, ...);
+
+        template<class... Args>
+        static void TLog(LogLevel level, const char* condition, const char* fileName, int lineNumber, std::string_view fmt, const Args&... args) {
+            const auto& str = fmt::vformat(fmt, { fmt::make_format_args(args...) });
+
+            Log(level, condition, fileName, lineNumber, str.c_str());
+        }
     };
 }

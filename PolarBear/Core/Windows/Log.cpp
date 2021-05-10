@@ -57,6 +57,16 @@ namespace pb {
     }
 
     void ILog::Log(LogLevel level, const char* condition, const char* fileName, int lineNumber, const char* message, ...) {
+        const size_t BUFF_SIZE = 1024;
+        char buffer[BUFF_SIZE] = {};
+
+        va_list args;
+        va_start(args, message);
+
+        auto offset = sprintf_s(buffer, "%s(%d): ", fileName, lineNumber);
+        vsnprintf_s(buffer + offset, BUFF_SIZE - offset, BUFF_SIZE - offset, message, args);
+
+        OutputDebugStringA(buffer);
     }
 
 }

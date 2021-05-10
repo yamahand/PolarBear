@@ -1,8 +1,15 @@
-﻿#pragma once
+#pragma once
 
 #include <string>
 #include <fmt/core.h>
 #include <fmt/format.h>
+
+void* operator new(std::size_t size) {
+    return malloc(size);
+}
+void operator delete(void* p, std::size_t s) {
+    free(p);
+}
 
 namespace pb {
 
