@@ -10,6 +10,15 @@
 
 #include "../Interfaces/ITime.h"
 #include "../Interfaces/IAssert.h"
+#include <PolarBear.hpp>
+
+void* operator new(std::size_t size) {
+    size = size < 4 ? 4 : size;
+    return malloc(size);
+}
+void operator delete(void* p, std::size_t s) {
+    free(p);
+}
 
 namespace pb {
     namespace {
@@ -455,7 +464,7 @@ namespace pb {
     }
 
     int WindowsMain(int argc, const char** argv, IApp* app) {
-
+        pb::format("answer is {}", 42);
         //PB_ASSERT(false);
         PB_ASSERT_MSG(false, "%d, {0}", argc, argc);
         WindowDesc window = {};

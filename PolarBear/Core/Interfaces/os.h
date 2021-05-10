@@ -1,5 +1,8 @@
 #pragma once
 
+void* operator new(std::size_t size);
+void operator delete(void* p, std::size_t s);
+
 namespace pb
 {
 

@@ -4,13 +4,6 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-void* operator new(std::size_t size) {
-    return malloc(size);
-}
-void operator delete(void* p, std::size_t s) {
-    free(p);
-}
-
 namespace pb {
 
     void output(std::string_view str);
@@ -18,6 +11,8 @@ namespace pb {
 
     template <class... Args>
     std::string format(std::string_view fmt, const Args &...args) {
+        char buffer[256] = {};
+        fmt::vformat_to_n(buffer, 256, fmt::basic_string_view<char>(fmt), fmt::make_format_args(args...));
         return fmt::vformat(fmt, { fmt::make_format_args(args...) });
         //return fmt::format("The answer is {}.", 42);
     }
