@@ -24,14 +24,13 @@ namespace pb {
         ILog() = delete;
         ~ILog() = delete;
 
-        static void Log(LogLevel level, const char* condition, const char* fileName, int lineNumber);
-        static void Log(LogLevel level, const char* condition, const char* fileName, int lineNumber, const char* message, ...);
+        static void Log(LogLevel level, const char* fileName, int lineNumber, const char* message, ...);
 
         template<class... Args>
-        static void TLog(LogLevel level, const char* condition, const char* fileName, int lineNumber, std::string_view fmt, const Args&... args) {
+        static void TLog(LogLevel level, const char* fileName, int lineNumber, std::string_view fmt, const Args&... args) {
             const auto& str = fmt::vformat(fmt, { fmt::make_format_args(args...) });
 
-            Log(level, condition, fileName, lineNumber, str.c_str());
+            Log(level, fileName, lineNumber, str.c_str());
         }
     };
 }

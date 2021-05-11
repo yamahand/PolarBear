@@ -45,18 +45,7 @@ namespace pb {
         free(symbol);
     }
 
-    void ILog::Log(LogLevel level, const char* condition, const char* fileName, int lineNumber) {
-        char buffer[256] = {};
-        sprintf_s(buffer, "%s(%d): ", fileName, lineNumber);
-        OutputDebugStringA(buffer);
-        OutputDebugStringA(condition);
-        OutputDebugStringA("\n");
-
-        printStack();
-        printStack();
-    }
-
-    void ILog::Log(LogLevel level, const char* condition, const char* fileName, int lineNumber, const char* message, ...) {
+    void ILog::Log(LogLevel level, const char* fileName, int lineNumber, const char* message, ...) {
         const size_t BUFF_SIZE = 1024;
         char buffer[BUFF_SIZE] = {};
 
