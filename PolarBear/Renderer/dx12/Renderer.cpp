@@ -35,7 +35,7 @@ namespace pb {
         }
     }
 
-    void InitRenderer() {
+    void InitRenderer(const char* appName, const RendererDesc& rendererDesc, Renderer** pRenderer) {
 
 #ifdef PB_DEBUG
         EnableDebugLayer();
@@ -69,11 +69,11 @@ namespace pb {
         // ここに特定の名前を持つアダプターオブジェクトが入る
         IDXGIAdapter* tmpAdapter = nullptr;
 
-        for (UINT i = 0; dxgiFactory->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++)     {
+        for (UINT i = 0; dxgiFactory->EnumAdapters(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; i++) {
             adapters.push_back(tmpAdapter);
         }
 
-        for (auto& adapter : adapters)     {
+        for (auto& adapter : adapters) {
             DXGI_ADAPTER_DESC desc = {};
             adapter->GetDesc(&desc);
 
@@ -97,6 +97,10 @@ namespace pb {
         result = device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(&cmdQueue));
         assert(cmdQueue);
         assert(SUCCEEDED(result));
+
+        uint32_t windowWidth = 0;
+        uint32_t windowHeight = 0;
+        HWND hwnd = nullptr;
 
         DXGI_SWAP_CHAIN_DESC1 swapchainDesc = {};
         swapchainDesc.Width = windowWidth;
@@ -201,6 +205,9 @@ namespace pb {
             dsvHeap->GetCPUDescriptorHandleForHeapStart()
         );
 
+    }
+
+    void RemoveRenderer(Renderer* pRenderer) {
     }
 
 }
