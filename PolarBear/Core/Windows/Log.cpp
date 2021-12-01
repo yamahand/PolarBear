@@ -4,9 +4,6 @@
 #include <imagehlp.h>
 #pragma comment(lib, "imagehlp.lib")
 
-#include <fmt/core.h>
-#include <fmt/format.h>
-
 namespace pb {
 
     bool isSymInitialized = false;

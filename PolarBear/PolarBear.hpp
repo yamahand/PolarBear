@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <format>
 
 namespace pb {
 
@@ -10,31 +9,31 @@ namespace pb {
     void output(std::wstring_view str);
 
     template <class... Args>
-    std::string format(std::string_view fmt, const Args &...args) {
+    std::string format(std::string_view std, const Args &...args) {
         char buffer[256] = {};
-        fmt::vformat_to_n(buffer, 256, fmt::basic_string_view<char>(fmt), fmt::make_format_args(args...));
-        return fmt::vformat(fmt, { fmt::make_format_args(args...) });
-        //return fmt::format("The answer is {}.", 42);
+        std::format_to_n(buffer, 256, std::basic_string_view<char>(std), std::make_format_args(args...));
+        return std::vformat(std, { std::make_format_args(args...) });
+        //return std::format("The answer is {}.", 42);
     }
 
     template <class... Args>
-    std::wstring format(std::wstring_view fmt, const Args &...args) {
-        return fmt::vformat(fmt, { fmt::make_format_args(args...) });
+    std::wstring format(std::wstring_view std, const Args &...args) {
+        return std::vformat(std, { std::make_format_args(args...) });
     }
 
     template <class... Args>
-    std::string format(const std::locale& loc, std::string_view fmt, const Args &...args) {
-        return fmt::vformat(loc, fmt, { fmt::make_format_args(args...) });
+    std::string format(const std::locale& loc, std::string_view std, const Args &...args) {
+        return std::vformat(loc, std, { std::make_format_args(args...) });
     }
 
     template <class... Args>
-    std::wstring format(const std::locale& loc, std::wstring_view fmt, const Args &...args) {
-        return fmt::vformat(loc, fmt, { fmt::make_format_args(args...) });
+    std::wstring format(const std::locale& loc, std::wstring_view std, const Args &...args) {
+        return std::vformat(loc, std, { std::make_format_args(args...) });
     }
 
     template <class... Args>
-    void outputf(std::string_view fmt, const Args &...args) {
-        auto str = format(fmt, args...);
+    void outputf(std::string_view std, const Args &...args) {
+        auto str = format(std, args...);
         output(str);
     }
 }

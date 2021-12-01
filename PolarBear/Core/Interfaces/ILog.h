@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cstdint>
-#include "../NonCopyable.h"
+#include <string>
 
-#include <fmt/format.h>
+#include "../NonCopyable.h"
 
 namespace pb {
 
@@ -28,7 +28,7 @@ namespace pb {
 
         template<class... Args>
         static void TLog(LogLevel level, const char* fileName, int lineNumber, std::string_view fmt, const Args&... args) {
-            const auto& str = fmt::vformat(fmt, { fmt::make_format_args(args...) });
+            const auto& str = std::vformat(fmt, { std::make_format_args(args...) });
 
             Log(level, fileName, lineNumber, str.c_str());
         }
